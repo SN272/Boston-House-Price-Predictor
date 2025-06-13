@@ -1,0 +1,29 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boston House Price Predictor</title>
+    <style>
+        body { background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif; }
+        .container { width: 50%; margin: auto; margin-top: 40px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        input[type=number] { width: 100%; padding: 10px; margin: 5px 0 20px; border: 1px solid #ddd; border-radius: 5px; }
+        input[type=submit] { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        input[type=submit]:hover { background-color: #0056b3; }
+        h2, h3 { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Boston House Price Predictor</h2>
+        <form method="POST" action="/predict">
+            {% for i in range(13) %}
+                <input type="number" name="feature{{ i }}" placeholder="Enter feature {{ i+1 }}" required>
+            {% endfor %}
+            <input type="submit" value="Predict Price">
+        </form>
+        {% if prediction_text %}
+            <h3>{{ prediction_text }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
