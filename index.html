@@ -1,28 +1,118 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Boston House Price Predictor</title>
     <style>
-        body { background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif; }
-        .container { width: 50%; margin: auto; margin-top: 40px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
-        input[type=number] { width: 100%; padding: 10px; margin: 5px 0 20px; border: 1px solid #ddd; border-radius: 5px; }
-        input[type=submit] { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
-        input[type=submit]:hover { background-color: #0056b3; }
-        h2, h3 { text-align: center; }
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #444;
+        }
+
+        form label {
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .prediction {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2a2a2a;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Boston House Price Predictor</h2>
-        <form method="POST" action="/predict">
-            {% for i in range(13) %}
-                <input type="number" name="feature{{ i }}" placeholder="Enter feature {{ i+1 }}" required>
-            {% endfor %}
+        <form action="/predict" method="POST">
+            <label>CRIM (per capita crime rate) [0.0 - 100.0]</label>
+            <input type="number" step="any" name="CRIM" required placeholder="e.g. 0.2">
+
+            <label>ZN (residential land zoned) [0.0 - 100.0]</label>
+            <input type="number" step="any" name="ZN" required placeholder="e.g. 25.0">
+
+            <label>INDUS (non-retail business acres) [0.0 - 30.0]</label>
+            <input type="number" step="any" name="INDUS" required placeholder="e.g. 10.0">
+
+            <label>CHAS (Charles River dummy: 0 or 1)</label>
+            <input type="number" step="1" min="0" max="1" name="CHAS" required placeholder="0 or 1">
+
+            <label>NOX (nitric oxide concentration) [0.3 - 0.9]</label>
+            <input type="number" step="any" name="NOX" required placeholder="e.g. 0.5">
+
+            <label>RM (average rooms per dwelling) [3.0 - 9.0]</label>
+            <input type="number" step="any" name="RM" required placeholder="e.g. 6.5">
+
+            <label>AGE (proportion of owner units built before 1940) [0 - 100]</label>
+            <input type="number" step="any" name="AGE" required placeholder="e.g. 60.0">
+
+            <label>DIS (distance to employment centers) [1.0 - 12.0]</label>
+            <input type="number" step="any" name="DIS" required placeholder="e.g. 4.5">
+
+            <label>RAD (accessibility to highways) [1 - 24]</label>
+            <input type="number" step="1" name="RAD" required placeholder="e.g. 5">
+
+            <label>TAX (property tax rate) [200 - 750]</label>
+            <input type="number" step="any" name="TAX" required placeholder="e.g. 350">
+
+            <label>PTRATIO (pupil–teacher ratio) [12.0 - 22.0]</label>
+            <input type="number" step="any" name="PTRATIO" required placeholder="e.g. 18.0">
+
+            <label>B (Black population index) [0.0 - 400.0]</label>
+            <input type="number" step="any" name="B" required placeholder="e.g. 390.0">
+
+            <label>LSTAT (% lower status population) [1.0 - 40.0]</label>
+            <input type="number" step="any" name="LSTAT" required placeholder="e.g. 12.0">
+
             <input type="submit" value="Predict Price">
         </form>
+
         {% if prediction_text %}
-            <h3>{{ prediction_text }}</h3>
+        <div class="prediction">
+            {{ prediction_text }}
+        </div>
         {% endif %}
     </div>
 </body>
